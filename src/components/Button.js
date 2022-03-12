@@ -1,16 +1,16 @@
 import React from 'react'
-import './Number.css'
+import './Button.css'
 
-export class Number extends React.Component {
+export class Button extends React.Component {
     render() {
         return(
             <div>
                 <input
                 onClick={() => {
-                    this.props.onClick(this.props.number)
+                    this.props.onClick(this.props.btnValue)
                 }}
                 type="button"
-                value={this.props.number}
+                value={this.props.btnValue}
                 className='input'
                 />
             </div>

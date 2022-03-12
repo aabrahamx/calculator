@@ -1,101 +1,100 @@
 import logo from "./logo.svg";
-import { Number } from "./components/Number.js";
+import React, { isValidElement } from "react";
+import { Button } from "./components/Button.js";
+import { changeToNumber, display } from './helpers/formatters.js'
 import "./App.css";
-import React from "react";
 
 function App() {
   class Calculator extends React.Component {
     constructor(props) {
       super(props);
       this.state = { 
-        numberOne: '', 
-        numberTwo: '', 
-        operating: false, 
-        currentOperator: '', 
+        primaryNumber: '', 
+        secondaryNumber: '', 
+        workingOperator: '',
+        calculatedNumber: '', // the value of primary & secondary
         operators: ['+', '-', 'x', '/', '=', 'C'] 
       }
       this.handleClick = this.handleClick.bind(this);
-    }
+    };
+    
+    handleClick(eTargetValue) {
+      const operators = this.state.operators;
+      operators.includes(eTargetValue) ? this.operate(eTargetValue) : this.acceptInput(eTargetValue);
+    };
 
-    changeToNumber(str) {
-      let number;
-      str.includes('.') ? number = parseFloat(str) : number = parseInt(str);
-      return number;
-    }
+    acceptInput(number) {
+      display(null)
+      display(number); 
+      this.storeInput(number); 
+    };
 
-    operate(val) {
-      const el = document.querySelector('.display');
-      if(val === '=') {
-        this.display(null);
-        this.setState({operating: false})
-        setTimeout(() => {
-          const value = this.calculate();
-          console.log(value);
-          this.display(value);
-        }, 100);
+    operate(operator) {
+      if(operator === '=') {
+        display(null);
+        const calculated = this.calculate();
+        display(calculated);
+        this.setState({
+          calculatedNumber: calculated, 
+          primaryNumber: '', 
+          secondaryNumber: '', 
+          workingOperator: ''
+        })
+
+      } else if(operator === 'C') {
+        display(null);
+        this.setState({        
+          primaryNumber: '', 
+          secondaryNumber: '', 
+          workingOperator: '', 
+        })
+
       } else {
-        //stores operator type & initiates the secondary number
-        this.setState({operating: true, currentOperator: val});
-        el.innerHTML = '';
-        setTimeout(() => {
-          console.log(this.state.currentOperator)
-        }, 100);
+        display(null);
+        this.setState({
+          workingOperator: operator
+        });
       }
-    }
+    };
+
+    storeInput(val) {
+      // concatenates str as client inputs
+      const operating = this.state.workingOperator;
+      if(!operating) {
+        let primary = this.state.primaryNumber + val;
+        this.setState({primaryNumber: primary});
+      } else if (operating) {
+        let secondary = this.state.secondaryNumber + val;
+        this.setState({secondaryNumber: secondary});
+      }
+    };
+    
+
     calculate() {
-      const operator = this.state.currentOperator;
+      const operator = this.state.workingOperator;
+      const primary = changeToNumber(this.state.primaryNumber);
+      const secondary = changeToNumber(this.state.secondaryNumber);
       let result;
-      const num1 = this.changeToNumber(this.state.numberOne);
-      const num2 = this.changeToNumber(this.state.numberTwo);
       switch(operator) {
         case ('+'): 
-          result = num1 + num2;
+          result = primary + secondary;
           break;
         case ('-'):
-          result = num1 - num2;
+          result = primary - secondary;
           break;
         case ('x'):
-          result = num1 * num2;
+          result = primary * secondary;
           break;
         case ('/'): 
-        result = num1 / num2;
-        break;
+          result = primary / secondary;
+          break;
         default:
           console.log('error on calculate function');
       }
-      return result;
-    }
+      return result.toFixed(1);
+    };
 
-    store(val) {
-      if(!this.state.operating) {
-        let newValue = this.state.numberOne;
-        newValue += val
-        this.setState({numberOne: newValue});
-        setTimeout( () => {console.log(`numberOne: ${this.state.numberOne}`)}, 100)
-      } else if (this.state.operating) {
-        let newValue = this.state.numberTwo;
-        newValue += val;
-        this.setState({numberTwo: newValue})
-        setTimeout(() => {console.log(`numberTwo: ${this.state.numberTwo}`)}, 100);
-      }
-    }
 
-    display(val) {
-      const el = document.querySelector(".display");
-      val === null ? el.innerHTML = '' : el.innerHTML += val;
-    }
-
-    handleClick(val) {
-      const operators = this.state.operators;
-      if(operators.includes(val)) { 
-        this.operate(val); 
-        console.log('operating..')
-      } else { 
-        this.display(val); 
-        this.store(val); 
-        console.log('storing..') 
-      }  
-    }
 
     render() {
       return (
@@ -105,63 +104,63 @@ function App() {
               <div className="display"></div>
             </div>
             <div className="column">
-              <Number number="+" onClick={val => this.handleClick(val)} />
+              <Button btnValue="+" onClick={val => this.handleClick(val)} />
             </div>
           </div>
           <div className="row">
             <div className="column">
-              <Number number="7" onClick={val => this.handleClick(val)} />
+              <Button btnValue="7" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="8" onClick={val => this.handleClick(val)} />
+              <Button btnValue="8" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="9" onClick={val => this.handleClick(val)} />
+              <Button btnValue="9" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="-" onClick={val => this.handleClick(val)} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="column">
-              <Number number="4" onClick={val => this.handleClick(val)} />
-            </div>
-            <div className="column">
-              <Number number="5" onClick={val => this.handleClick(val)} />
-            </div>
-            <div className="column">
-              <Number number="6" onClick={val => this.handleClick(val)} />
-            </div>
-            <div className="column">
-              <Number number="/" onClick={val => this.handleClick(val)} />
+              <Button btnValue="-" onClick={val => this.handleClick(val)} />
             </div>
           </div>
           <div className="row">
             <div className="column">
-              <Number number="1" onClick={val => this.handleClick(val)} />
+              <Button btnValue="4" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="2" onClick={val => this.handleClick(val)} />
+              <Button btnValue="5" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="3" onClick={val => this.handleClick(val)} />
+              <Button btnValue="6" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="x" onClick={val => this.handleClick(val)} />
+              <Button btnValue="/" onClick={val => this.handleClick(val)} />
             </div>
           </div>
           <div className="row">
             <div className="column">
-              <Number number="0" onClick={val => this.handleClick(val)} />
+              <Button btnValue="1" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="." onClick={val => this.handleClick(val)} />
+              <Button btnValue="2" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="=" onClick={val => this.handleClick(val)} />
+              <Button btnValue="3" onClick={val => this.handleClick(val)} />
             </div>
             <div className="column">
-              <Number number="C" onClick={val => this.handleClick(val)} />
+              <Button btnValue="x" onClick={val => this.handleClick(val)} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="column">
+              <Button btnValue="0" onClick={val => this.handleClick(val)} />
+            </div>
+            <div className="column">
+              <Button btnValue="." onClick={val => this.handleClick(val)} />
+            </div>
+            <div className="column">
+              <Button btnValue="=" onClick={val => this.handleClick(val)} />
+            </div>
+            <div className="column">
+              <Button btnValue="C" onClick={val => this.handleClick(val)} />
             </div>
           </div>
         </div>
