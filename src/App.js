@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import React, { isValidElement } from "react";
+import React from "react";
 import { Button } from "./components/Button.js";
 import { changeToNumber, display } from './helpers/formatters.js'
 import "./App.css";
