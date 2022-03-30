@@ -1,0 +1,41 @@
+* {
+  outline: 1px solid white;
+}
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.cont {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  height: 300px;
+  width: 225px;
+}
+/*
+.row {
+  border: 2px solid lightblue;
+  background-color: black;
+}
+.column {
+  display: inline-block;
+}
+*/
+
+.display {
+  /* -- width: dependant on Number component*/
+  width: 149px;
+  padding-right: 1rem;
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  background-color: black;
+}

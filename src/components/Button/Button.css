@@ -1,0 +1,11 @@
+
+.input {
+    margin: 0;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    background-color: lightblue;
+}
+.input:hover {
+    background-color: aliceblue;
+}
