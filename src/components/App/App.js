@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "../Button/Button.js";
-import { changeToNumber, display } from "../../helpers/formatters";
+import { Display } from "../Display/Display.js";
+import { inputValues as btnValues } from "../../helpers/inputValues.js";
+import { changeToNumber } from "../../helpers/formatters";
 import "./App.css";
 
 function App() {
@@ -13,47 +15,37 @@ function App() {
         workingOperator: "",
         calculatedNumber: "", // the value of primary & secondary
         operators: ["+", "-", "x", "/", "=", "C"],
-        btnNames: [
-          "+",
-          "-",
-          "x",
-          "/",
-          "=",
-          "C",
-          ".",
-          "0",
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-        ],
+        NumberToDisplay: null
       };
       this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(eTargetValue) {
+    handleClick({ target }) {
       const operators = this.state.operators;
-      operators.includes(eTargetValue)
-        ? this.operate(eTargetValue)
-        : this.acceptInput(eTargetValue);
+      if (operators.includes(target.value)) {
+        this.handleOperation(target.value);
+      } else {
+        this.handleNumber(target.value);
+      }
     }
 
-    acceptInput(number) {
-      display(null);
-      display(number);
-      this.storeInput(number);
+    handleNumber(num) {
+      this.handleDisplay(num);
+      this.storeNumber(num);
     }
 
-    operate(operator) {
+    handleDisplay(num) {
+      if(num) {
+        this.setState({ NumberToDisplay: num })
+      } else {
+        this.setState({ NumberToDisplay: null })
+      }
+    }
+
+    handleOperation(operator) {
       if (operator === "=") {
-        display(null);
         const calculated = this.calculate();
-        display(calculated);
+        this.handleDisplay(calculated);
         this.setState({
           calculatedNumber: calculated,
           primaryNumber: "",
@@ -61,21 +53,22 @@ function App() {
           workingOperator: "",
         });
       } else if (operator === "C") {
-        display(null);
+        this.handleDisplay();
         this.setState({
           primaryNumber: "",
           secondaryNumber: "",
           workingOperator: "",
         });
       } else {
-        display(null);
+        // [+, -, /, *]
+        this.handleDisplay();
         this.setState({
           workingOperator: operator,
         });
       }
     }
 
-    storeInput(val) {
+    storeNumber(val) {
       // concatenates str as client inputs
       const operating = this.state.workingOperator;
       if (!operating) {
@@ -91,6 +84,7 @@ function App() {
       const operator = this.state.workingOperator;
       const primary = changeToNumber(this.state.primaryNumber);
       const secondary = changeToNumber(this.state.secondaryNumber);
+
       let result;
       switch (operator) {
         case "+":
@@ -108,25 +102,43 @@ function App() {
         default:
           console.log("error on calculate function");
       }
+      console.log("result: " + result);
       return result.toFixed(1);
     }
 
     render() {
       return (
         <div className="cont">
-          <div className="display"></div>
-          {this.state.btnNames.map((name) => {
+
+          <Display
+           className="display"
+           number={ this.state.NumberToDisplay } 
+           />
+
+          {btnValues[0].map((obj) => {
             return (
               <Button
-                btnValue={name}
-                onClick={(val) => this.handleClick(val)}
-              ></Button>
+                btnValue={obj.value}
+                className={`btn${obj.name}`}
+                onClick={this.handleClick}
+              />
             );
           })}
+          {btnValues[1].map((obj) => {
+            return (
+              <Button
+                btnValue={obj.value}
+                className={`btn${obj.name}`}
+                onClick={this.handleClick}
+              />
+            );
+          })}
+
         </div>
       );
     }
   }
+
   return (
     <div className="App">
       <Calculator />

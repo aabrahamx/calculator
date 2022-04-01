@@ -1,0 +1,16 @@
+
+.display {
+    /* -- width: dependant on Number component*/
+    padding-right: 1rem;
+    color: white;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    background-color: black;
+}
+
+.display > span {
+    border: none;
+}
