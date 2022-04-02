@@ -1,23 +1,26 @@
-# Getting Started with Create React App
+# **Simple Calculator** 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fada8d6a-c896-4488-a203-8e937f6f11ba/deploy-status)](https://app.netlify.com/sites/hopeful-wing-41a671/deploys)
 
-## Available Scripts
+## **Description** 📜
 
-In the project directory, you can run:
+Just a simple calculator built using react. Future plans are to include more computing functionality. 
+
+## **Tech Stacks** ⚙️
+
+- React
+- JS
+- HTML/CSS
+
+
+
+
+
+## **Available Scripts**
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
 ### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
