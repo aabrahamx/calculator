@@ -1,5 +1,5 @@
 * {
-  outline: 0px solid white;
+  outline: 1px solid white;
 }
 .App {
   text-align: center;
@@ -11,19 +11,21 @@
   flex-direction: column;
 }
 .cont {
-  height: 365px;
-  width: 223px;
+  height: 100vh;
+  width: 100vw;
+  max-width: 500px;
+  max-height: 900px;
   display: grid;
   gap: 1px;
-  grid-template-rows: repeat(6, 60px);
-  grid-template-columns: repeat(4, 55px);
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   background-color: rgba(173, 216, 230, 0.5);
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, .1);
 }
 
 
 /* --- 1st row ---- */
-.display { grid-area: 1 / 1 / span 1 / span 4; }
+.display { grid-area: 1 / 1 / span 1 / span 4;}
 
 /* --- 2nd row --- */
 .btnseven { grid-area: 2 / 1 / span 1 / span 1; }
