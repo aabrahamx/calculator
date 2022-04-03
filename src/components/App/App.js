@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../Button/Button.js";
 import { Display } from "../Display/Display.js";
 import { inputValues as btnValues } from "../../helpers/inputValues.js";
-import { changeToNumber } from "../../helpers/formatters";
+import { changeToNumber, calculatedFormatter } from "../../helpers/formatters";
 import "./App.css";
 
 function App() {
@@ -13,9 +13,9 @@ function App() {
         primaryNumber: "",
         secondaryNumber: "",
         workingOperator: "",
-        calculatedNumber: "", // the value of primary & secondary
+        calculatedNumber: "",
         operators: ["+", "-", "x", "/", "=", "C"],
-        NumberToDisplay: null
+        NumberToDisplay: null,
       };
       this.handleClick = this.handleClick.bind(this);
     }
@@ -35,47 +35,35 @@ function App() {
     }
 
     handleDisplay(num) {
-      if(num) {
-        this.setState({ NumberToDisplay: num })
+      if (num) {
+        this.setState({ NumberToDisplay: num });
       } else {
-        this.setState({ NumberToDisplay: null })
+        this.setState({ NumberToDisplay: null });
       }
     }
 
     handleOperation(operator) {
       if (operator === "=") {
         const calculated = this.calculate();
+        this.setState({ calculatedNumber: calculated });
         this.handleDisplay(calculated);
-        this.setState({
-          calculatedNumber: calculated,
-          primaryNumber: "",
-          secondaryNumber: "",
-          workingOperator: "",
-        });
+        this.reset();
       } else if (operator === "C") {
         this.handleDisplay();
-        this.setState({
-          primaryNumber: "",
-          secondaryNumber: "",
-          workingOperator: "",
-        });
-      } else {
-        // [+, -, /, *]
+        this.reset();
+      } /* -- [+, -, /, *] -- */ else {
         this.handleDisplay();
-        this.setState({
-          workingOperator: operator,
-        });
+        this.setState({ workingOperator: operator });
       }
     }
 
-    storeNumber(val) {
-      // concatenates str as client inputs
+    storeNumber(stringNumber) {
       const operating = this.state.workingOperator;
       if (!operating) {
-        let primary = this.state.primaryNumber + val;
+        let primary = this.state.primaryNumber + stringNumber;
         this.setState({ primaryNumber: primary });
       } else if (operating) {
-        let secondary = this.state.secondaryNumber + val;
+        let secondary = this.state.secondaryNumber + stringNumber;
         this.setState({ secondaryNumber: secondary });
       }
     }
@@ -84,7 +72,6 @@ function App() {
       const operator = this.state.workingOperator;
       const primary = changeToNumber(this.state.primaryNumber);
       const secondary = changeToNumber(this.state.secondaryNumber);
-
       let result;
       switch (operator) {
         case "+":
@@ -102,38 +89,32 @@ function App() {
         default:
           console.log("error on calculate function");
       }
-      console.log("result: " + result);
-      return result.toFixed(1);
+      return calculatedFormatter(result);
+    }
+
+    reset() {
+      this.setState({
+        primaryNumber: "",
+        secondaryNumber: "",
+        workingOperator: "",
+      });
     }
 
     render() {
       return (
         <div className="cont">
-
-          <Display
-           className="display"
-           number={ this.state.NumberToDisplay } 
-           />
-
-          {btnValues[0].map((obj) => {
-            return (
-              <Button
-                btnValue={obj.value}
-                className={`btn${obj.name}`}
-                onClick={this.handleClick}
-              />
-            );
+          <Display className="display" number={this.state.NumberToDisplay} />
+          {btnValues.map((arr) => {
+            return arr.map((obj) => {
+              return (
+                <Button
+                  btnValue={obj.value}
+                  className={`btn${obj.name}`}
+                  onClick={this.handleClick}
+                />
+              );
+            });
           })}
-          {btnValues[1].map((obj) => {
-            return (
-              <Button
-                btnValue={obj.value}
-                className={`btn${obj.name}`}
-                onClick={this.handleClick}
-              />
-            );
-          })}
-
         </div>
       );
     }
