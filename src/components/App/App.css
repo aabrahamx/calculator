@@ -1,5 +1,5 @@
 * {
-  outline: 1px solid white;
+  outline: 0px solid white;
 }
 .App {
   text-align: center;
@@ -7,11 +7,11 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
 }
 .cont {
-  height: 80vh;
+  height: 90vh;
   width: 100vw;
   max-width: 500px;
   max-height: 900px;
