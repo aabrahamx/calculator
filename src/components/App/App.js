@@ -15,7 +15,7 @@ function App() {
         workingOperator: "",
         calculatedNumber: "",
         operators: ["+", "-", "x", "/", "=", "C"],
-        NumberToDisplay: null,
+        numberToDisplay: null,
       };
       this.handleClick = this.handleClick.bind(this);
     }
@@ -30,15 +30,22 @@ function App() {
     }
 
     handleNumber(num) {
-      this.handleDisplay(num);
+      this.handleDisplay('concated', num);
       this.storeNumber(num);
     }
 
-    handleDisplay(num) {
-      if (num) {
-        this.setState({ NumberToDisplay: num });
-      } else {
-        this.setState({ NumberToDisplay: null });
+    handleDisplay(command, num) {
+      if(command === 'clear' && !num) {
+        this.setState({ numberToDisplay: null })
+      } else if(command === 'concated' && num) {
+        if(!this.state.numberToDisplay) {
+          this.setState({ numberToDisplay: `${num}` })
+        } else {
+          const numberString = this.state.numberToDisplay + `${num}`;
+          this.setState({ numberToDisplay: numberString })
+        }
+      } else if(command === 'calculated' && num) {
+        this.setState({ numberToDisplay: `${num}`})
       }
     }
 
@@ -46,13 +53,13 @@ function App() {
       if (operator === "=") {
         const calculated = this.calculate();
         this.setState({ calculatedNumber: calculated });
-        this.handleDisplay(calculated);
+        this.handleDisplay('calculated', calculated);
         this.reset();
       } else if (operator === "C") {
-        this.handleDisplay();
+        this.handleDisplay('clear');
         this.reset();
       } /* -- [+, -, /, *] -- */ else {
-        this.handleDisplay();
+        this.handleDisplay('clear');
         this.setState({ workingOperator: operator });
       }
     }
@@ -103,7 +110,7 @@ function App() {
     render() {
       return (
         <div className="cont">
-          <Display className="display" number={this.state.NumberToDisplay} />
+          <Display className="display" number={this.state.numberToDisplay} />
           {btnValues.map((arr) => {
             return arr.map((obj) => {
               return (
