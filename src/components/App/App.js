@@ -5,6 +5,8 @@ import { inputValues as btnValues } from "../../helpers/inputValues.js";
 import { changeToNumber, calculatedFormatter } from "../../helpers/formatters";
 import "./App.css";
 
+const windowHeight = window.innerHeight;
+
 function App() {
   class Calculator extends React.Component {
     constructor(props) {
@@ -109,7 +111,7 @@ function App() {
 
     render() {
       return (
-        <div className="cont">
+        <div className="cont" style={{height: windowHeight}}>
           <Display className="display" number={this.state.numberToDisplay} />
           {btnValues.map((arr) => {
             return arr.map((obj) => {
