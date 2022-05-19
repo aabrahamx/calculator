@@ -111,18 +111,16 @@ function App() {
 
     render() {
       return (
-        <div className="cont" style={{height: windowHeight}}>
+        <div className="cont" style={{ height: windowHeight }}>
           <Display className="display" number={this.state.numberToDisplay} />
-          {btnValues.map((arr) => {
-            return arr.map((obj) => {
-              return (
-                <Button
-                  btnValue={obj.value}
-                  className={`btn${obj.name}`}
-                  onClick={this.handleClick}
-                />
-              );
-            });
+          {btnValues.map((obj) => {
+            return (
+              <Button
+                btnValue={obj.value}
+                className={`btn${obj.name}`}
+                onClick={this.handleClick}
+              />
+            );
           })}
         </div>
       );

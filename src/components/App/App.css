@@ -1,26 +1,16 @@
-* {
-  outline: 0px solid white;
-}
 .App {
+  height: 100vh;
   text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
 }
-@media (min-width: 1000px) {
-  .app {
-    justify-content: center;
-  }
-}
+
 .cont {
-  height: 100vh;
   width: 100vw;
-  max-width: 500px;
-  max-height: 900px;
+  max-width: 350px;
+  max-height: 550px;
   display: grid;
   gap: 1px;
   grid-template-rows: repeat(6, 1fr);
@@ -30,32 +20,32 @@
 }
 
 
-/* --- 1st row ---- */
+/*    1st row   - */
 .display { grid-area: 1 / 1 / span 1 / span 4;}
 
-/* --- 2nd row --- */
+/*    2nd row    */
 .btnseven { grid-area: 2 / 1 / span 1 / span 1; }
 .btneight { grid-area: 2 / 2 / span 1 / span 1; }
 .btnnine { grid-area: 2 / 3 / span 1 / span 1; }
 .btnplus { grid-area: 2 / 4 / span 1 / span 1; }
 
-/* --- 3rd row --- */
+/*    3rd row    */
 .btnfour { grid-area: 3 / 1 / span 1 / span 1; }
 .btnfive { grid-area: 3 / 2 / span 1 / span 1; }
 .btnsix { grid-area: 3 / 3 / span 1 / span 1; }
 .btnminus { grid-area: 3 / 4 / span 1 / span 1; }
 
-/* --- 4th row --- */
+/*    4th row    */
 .btnone { grid-area: 4 / 1 / span 1 / span 1; }
 .btntwo { grid-area: 4 / 2 / span 1 / span 1; }
 .btnthree { grid-area: 4 / 3 / span 1 / span 1; }
 .btnmultiply { grid-area: 4 / 4 / span 1 / span 1; }
 
-/* --- 5th row --- */
+/*    5th row    */
 .btndot { grid-area: 5 / 1 / span 1 / span 1; }
 .btnzero { grid-area: 5 / 2 / span 1 / span 1; }
 .btnequal { grid-area: 5 / 3 / span 1 / span 1; }
 .btndivide { grid-area: 5 / 4 / span 1 / span 1; }
 
-/* --- 6th row --- */
+/*    6th row    */
 .btnreset { grid-area: 6 / 1 / span 1 / span 4; }
