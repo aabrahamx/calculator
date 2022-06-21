@@ -1,5 +1,4 @@
 .App {
-  height: 100vh;
   text-align: center;
   display: flex;
   align-items: center;
@@ -9,18 +8,21 @@
 
 .cont {
   width: 100vw;
+  height: 100%;
   max-width: 350px;
   max-height: 550px;
+  border-radius: 20px;
+  overflow: hidden;
   display: grid;
   gap: 1px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(4, 1fr);
-  background-color: rgba(173, 216, 230, 0.5);
+  background-color: rgba(173, 216, 230, .35);
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, .1);
 }
 
 
-/*    1st row   - */
+/*    1st row    */
 .display { grid-area: 1 / 1 / span 1 / span 4;}
 
 /*    2nd row    */

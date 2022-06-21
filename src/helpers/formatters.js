@@ -4,7 +4,7 @@ function changeToNumber(str) {
   return number;
 }
 
-function calculatedFormatter(num) {
+function formatFloatNum(num) {
   if (typeof num === "number") {
     if (Number.isInteger(num)) {
       return num;
@@ -21,4 +21,4 @@ function calculatedFormatter(num) {
   return null;
 }
 
-export { changeToNumber, calculatedFormatter };
+export { changeToNumber, formatFloatNum };
